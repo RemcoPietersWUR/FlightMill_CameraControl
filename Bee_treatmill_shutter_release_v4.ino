@@ -19,7 +19,7 @@ unsigned long time2 = 0; //time of previous Hall sensor activation
 unsigned long roundtime = 0; //Roundtime, time bee takes to fly 360 degrees
 float roundtime2 = 0;
 int cameradelay = 10; //Delay of the camera between shutter release signal and actual sensor exposure, [ms]
-float travelangle = 270; //Travel angle between hall sensor and camera FOV [degrees]
+float travelangle = 360; //Travel angle between hall sensor and camera FOV [degrees]
 int min_roundtime = 200; //Minimal round time of a flying bee, @2 m/s ~ 300 ms
 void setup() {
   //Set up serial connection
@@ -39,23 +39,26 @@ void loop() {
   if (Serial.available() > 0) {
   // read the command
   int command = Serial.parseInt();
-  if (Serial.read() == '\n') {
+  Serial.println(command);
+  //if (Serial.read() == '\n') {
     if (command==1){
       CameraOn = HIGH;
       hall = LOW; 
       trigger = LOW; 
       time1 = 0; 
-      time2 = 0; 
+      time2 = millis(); 
       roundtime = 0; 
       roundtime2 = 0;
+      Serial.println("CameraON");
       }
       else
       {
       CameraOn = LOW;
       hall = LOW; 
       trigger = LOW; 
+      Serial.println("CameraOFF");
       }
-  }
+  //}
   }
 
   
